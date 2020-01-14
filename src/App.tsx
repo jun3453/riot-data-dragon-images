@@ -1,20 +1,13 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './App.css';
-import axios from 'axios';
-import {champions, champion} from 'riot-api-json-ts-wrapper/src/champion';
-
-const url = "http://ddragon.leagueoflegends.com/cdn/9.24.2/data/en_US/champion.json";
-const imageUrl = "http://ddragon.leagueoflegends.com/cdn/9.24.2/img/champion/";
+import { champions, champion, getChampions, createChampionImageUrl } from 'riot-api-json-ts-wrapper/src/champion';
 
 const App: React.FC = () => {
-  
+
   useEffect(() => {
-    const getChampions = async() => {
-      const result = await axios.get(url);
-      const champions: champions = result.data;
+    getChampions().then(champions => {
       setChampions(champions);
-    }
-    getChampions();
+    });
   }, [])
 
   const [champions, setChampions] = useState<champions>({
@@ -32,18 +25,18 @@ const App: React.FC = () => {
         return c.name.toLowerCase().indexOf(filterInput.toLowerCase()) > -1
       })
       .map((c: champion) => {
-        const imgUrl = imageUrl + c.image.full;
+        const imgUrl = createChampionImageUrl(c);
         const imgKey = c.id;
         return (
-            <img src={imgUrl} key={imgKey}/>
+          <img src={imgUrl} key={imgKey} />
         )
       });
-    }, [champions, filterInput]);
+  }, [champions, filterInput]);
 
   return (
     <div className="App">
       <div>
-        <input 
+        <input
           type="text"
           onChange={e => setFilterInput(e.target.value)}
         />
