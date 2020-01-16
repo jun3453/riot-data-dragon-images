@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './App.css';
-import { champions, champion, getChampions, createChampionImageUrl } from 'riot-api-json-ts-wrapper/src/champion';
+import { champions, champion, getChampions, createChampionImageUrl } from 'riot-api-json-ts-wrapper/dist/champion';
 
 const App: React.FC = () => {
 
   useEffect(() => {
-    getChampions().then(champions => {
-      setChampions(champions);
+    getChampions().then((c: champions) => {
+      setChampions(c);
     });
   }, [])
 
