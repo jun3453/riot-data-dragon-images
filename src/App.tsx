@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './App.css';
 import { champions, champion, getChampions, createChampionImageUrl } from 'riot-api-json-ts-wrapper/dist/DataDragon/champion';
 import { version, getVersions } from 'riot-api-json-ts-wrapper/dist/DataDragon/version';
@@ -92,18 +93,36 @@ const App: React.FC = () => {
     );
   }, [languages]);
 
-  return (
-    <div className="App">
-      <div>
-        {versionsPullDown}
-        {languagesPullDown}
-        <input
-          type="text"
-          onChange={e => setFilterInput(e.target.value)}
-        />
+  const hoge = () => {
+    return (
+      <div className="App">
+        <Link to="fuga">fugalink</Link>
+        <div>
+          {versionsPullDown}
+          {languagesPullDown}
+          <input
+            type="text"
+            onChange={e => setFilterInput(e.target.value)}
+          />
+        </div>
+        {images}
       </div>
-      {images}
-    </div>
+    );
+  }
+
+  const fuga = () => {
+    return (
+      <div className="App">
+        fugagaufuaguasdfuhasdf
+      </div>
+    );
+  }
+
+  return (
+    <BrowserRouter>
+      <Route exact path="/" component={hoge}></Route>
+      <Route exact path="/fuga" component={fuga}></Route>
+    </BrowserRouter>
   );
 }
 
